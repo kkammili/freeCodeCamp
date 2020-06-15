@@ -1,0 +1,12 @@
+{
+  "name": "lc",
+  "version": "0.0.0",
+  "description": "leet code practise",
+  "main": "index.js",
+  "scripts": {
+    "lint":"eslint --fix ./*.js"
+  },
+  "repository": "https://github.com/kkammili/lc.git",
+  "author": "krishna <kkrajus777@gmail.com>",
+  "license": "MIT"
+}
