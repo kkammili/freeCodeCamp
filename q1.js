@@ -15,5 +15,17 @@
  * @return {number[]}
  */
 const twoSum = function (nums, target) {
+  const result = [];
 
+  for (let i = 0; i < nums.length && !(result.length); i++) {
+    const currIterItem = nums[i];
+    const difference = target - currIterItem;
+    const secondItemPos = nums.indexOf(difference);
+    if (secondItemPos >= 1) {
+      result.push(currIterItem, nums[secondItemPos]);
+      return result;
+    }
+  }
 };
+
+console.log(twoSum([2, 7, 11, 15], 9));
