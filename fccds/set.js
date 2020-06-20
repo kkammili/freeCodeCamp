@@ -1,62 +1,156 @@
-// In this exercise we are going to create a class named Set to emulate an abstract data structure called "set". A set is like an array, but it cannot contain duplicate values. The typical use for a set is to simply check for the presence of an item. We can see how the ES6 Set object works in the example below:
+// In this exercise we are going to perform a union on two sets of data. We will create a method on our Set data structure called union. This method should take another Set as an argument and return the union of the two sets, excluding any duplicate values.
 //
-//     const set1 = new Set([1, 2, 3, 5, 5, 2, 0]);
-// console.log(set1);
-// // output: {1, 2, 3, 5, 0}
-// console.log(set1.has(1));
-// // output: true
-// console.log(set1.has(6));
-// // output: false
-// First, we will create an add method that adds a value to our set collection as long as the value does not already exist in the set. Then we will create a remove method that removes a value from the set collection if it already exists. And finally, we will create a size method that returns the number of elements inside the set collection.
-//
-//     Create an add method that adds a unique value to the set collection and returns true if the value was successfully added and false otherwise.
-//
-//     Create a remove method that accepts a value and checks if it exists in the set. If it does, then this method should remove it from the set collection, and return true. Otherwise, it should return false. Create a size method that returns the size of the set collection.
+//     For example, if setA = ['a','b','c'] and setB = ['a','b','d','e'], then the union of setA and setB is: setA.union(setB) = ['a', 'b', 'c', 'd', 'e'].
 
+
+//array implementation but prefer object implementation
+// class Set{
+//     constructor(){
+//         this.data = []
+//     }
+//
+//     values(){
+//         return this.data
+//     }
+//
+//     print(){
+//         console.log(this.data)
+//     }
+//
+//     add(setA){
+//         for(let item of setA){
+//             if(!this.data.includes(item)){
+//                 this.data.push(item)
+//             }
+//         }
+//     }
+//
+//     union(setB){
+//         let result = []
+//         let setBValues = setB.values()
+//
+//         this.values().forEach(item=> result.push(item))
+//         setBValues.forEach(item=>{
+//             if(!result.includes(item)){
+//                 result.push(item)
+//             }
+//         })
+//
+//         return result
+//     }
+// }
+//
+// let setA = new Set()
+//
+// setA.add(["a", "b", "c"])
+//
+// let setB = new Set()
+//
+// setB.add(["c", "d"])
+// setA.union(setB)
+// setA.print()
+// setB.print()
+// console.log(setA.union(setB))
+
+//their example
 
 class Set {
     constructor() {
-        this.data = [];
+        this.dictionary = {};
+        this.length = 0;
     }
 
-    print(){
-        console.log(this.data)
-    }
-
-    has(item) {
-        return this.data.indexOf(item) !== -1;
+    has(element) {
+        return this.dictionary[element] !== undefined;
     }
 
     values() {
-        return this.data;
+        return Object.keys(this.dictionary);
     }
 
-
-    add(item){
-        if(!this.data.includes(item)){
-            this.data.push(item)
-            return true
+    add(element) {
+        if (!this.has(element)) {
+            this.dictionary[element] = true;
+            this.length++;
+            return true;
         }
-        return false
+
+        return false;
     }
 
-    remove(item){
-        let remIndex = this.data.indexOf(item)
-        if(remIndex > -1){
-            this.data.splice(remIndex, 1)
+    remove(element) {
+        if (this.has(element)) {
+            delete this.dictionary[element];
+            this.length--;
+            return true;
         }
+
+        return false;
     }
 
-    size(){
-        return this.data.length
+    size() {
+        return this.length;
     }
+
+    union(set) {
+        const newSet = new Set();
+        this.values().forEach(value => {
+            newSet.add(value);
+        })
+        set.values().forEach(value => {
+            newSet.add(value);
+        })
+
+        return newSet;
+    }
+
+    intersection(setB){
+        const inSet = new Set()
+        this.values().forEach(value =>{
+            let setBvalues = setB.values()
+            if(setBvalues.includes(value)){
+                inSet.add(value)
+            }
+        })
+        return inSet
+    }
+
+    difference(setB){
+        const diffSet = new Set()
+
+        this.values().forEach(value =>{
+            let setBvalues = setB.values()
+            if(!setBvalues.includes(value)){
+                diffSet.add(value)
+            }
+        })
+        return diffSet
+    }
+
+    isSubsetOf(setB){
+        let subset = true
+        this.values().forEach(item=>{
+            if(!setB.values().includes(item)){
+                subset = false
+            }
+        })
+        return subset
+    }
+
 }
 
+let setA = new Set()
+setA.add('b')
+setA.add('c')
+setA.add('e')
+let setB = new Set()
+setB.add('a')
+setB.add('b')
+setB.add('f')
 
-let set = new Set()
+console.log(setA.union(setB))
 
-set.add(5)
-set.add(5)
-set.add(20)
-set.remove(5)
-set.print()
+console.log(setA.intersection(setB))
+console.log(setA.difference(setB))
+
+/* also check es5 set implementations on fcc*/
