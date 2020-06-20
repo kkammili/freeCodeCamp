@@ -2,8 +2,13 @@
 // shift adds and element on the left
 // pop deletes an element on the right
 // unshift deletes and element on the left
+// includes method checks whether and item exist in array or not
 // slice return sub array original array remains same
 // splice modifies original array deletes and adds to a array at required position
+
+// hasOwnProperity method check whether an item exists in given object
+// delete objname[key] deletes specified item in an object
+// modification of an object is straight forward.
 
 var array=[1,2,3,4,5];
 console.log(array.splice(2));
