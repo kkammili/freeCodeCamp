@@ -32,7 +32,7 @@ var DoublyLinkedList = function() {
     }
 
     this.reverse = function(currNode = this.head){
-        if(this.length === 0) return null
+        if(!this.head) return null
         this.index++
         let temp = currNode.next || null
         currNode.next = currNode.prev || null
@@ -44,9 +44,10 @@ var DoublyLinkedList = function() {
 
         // currNode = currNode.next
         if(temp){
-            this.reverse(temp)
+            return this.reverse(temp)
         }else{
             this.head = currNode
+            return this.head
         }
     }
 
@@ -58,5 +59,5 @@ const dl = new DoublyLinkedList()
 dl.add(1)
 dl.add(2)
 // dl.add(3)
-dl.reverse()
-dl.print()
+console.log(dl.reverse())
+
